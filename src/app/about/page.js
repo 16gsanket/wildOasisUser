@@ -2,12 +2,19 @@ import React from "react";
 import about1 from "@/app/public/about-1.jpg";
 import about2 from '@/app/public/about-2.jpg'
 import Image from "next/image";
+import { getCabins } from "../_lib/data-service";
+
+//will revalidate every 24 hours making the page static for rest of the time
+export const revalidate = 86400;
 
 
 export const metadata = {
   title:"About"
 }
 async function page() {
+
+  const cabins = await getCabins();
+  const number_cbains = cabins.length;
 
 
   return (
@@ -26,7 +33,7 @@ async function page() {
             simple pleasures with family.
           </p>
           <p>
-            Our 8 luxury cabins provide a cozy base, but the real freedom and
+            Our {number_cbains} luxury cabins provide a cozy base, but the real freedom and
             peace you'll find in the surrounding mountains. Wander through lush
             forests, breathe in the fresh air, and watch the stars twinkle above
             from the warmth of a campfire or your hot tub.
