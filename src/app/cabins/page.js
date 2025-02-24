@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 // this revalidate export enbles us to use the ISG so the page so when the user hits this route page is generated with fresh data is the validation time for that page is collapsed
 // this should be a direct value in seconds
@@ -36,6 +37,7 @@ async function Page({ searchParams }) {
       <Suspense fallback={<Spinner />} key={filter}>
         {/* here the fallback works becuase we created a compoent cabinList out of the loop which distinclty defined the boundary for the eract tree fiber to add the suspense before the tree compoennt ~~!!  */}
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );

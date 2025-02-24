@@ -59,13 +59,14 @@ export default async function Page({ params }) {
     <div className="max-w-6xl mx-auto mt-8">
       
       <Cabin cabin={cabin} />
-      <div>
-        <h2 className="text-5xl font-semibold text-center pb-10">
+      <div className="">
+        <h2 className="text-5xl font-semibold text-center pb-10 text-accent-500">
           Reserve {name} today. Pay on arrival.
         </h2>
       </div>
       <Suspense fallback={<Spinner />}>
         <Reservations cabin={cabin} />
+       
       </Suspense>
     </div>
   );
