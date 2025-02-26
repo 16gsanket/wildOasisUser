@@ -31,9 +31,9 @@ const authConfig = {
       session.user.guestId = guest.id;
       return session;
     },
-    pages: {
-      signIn: "/login",
-    },
+  },
+  pages: {
+    signIn: "/login",
   },
 };
 
