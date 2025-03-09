@@ -1,5 +1,5 @@
 'use client';
-import { isWithinInterval } from "date-fns";
+import { differenceInDays, isWithinInterval } from "date-fns";
 
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -21,8 +21,9 @@ function DateSelector({settings, bookedDates, cabin}) {
   // CHANGE
   const regularPrice = 23;
   const discount = 23;
-  const numNights = 23;
+ 
   const cabinPrice = 23;
+  const numNights = differenceInDays(range.to, range.from);
 
   // const { id, name, maxCapacity, regularPrice, discount, image, description } =
   // cabin;
@@ -33,7 +34,7 @@ function DateSelector({settings, bookedDates, cabin}) {
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
-        className="pt-12 place-self-center text-accent-400"
+        className="pt-12 place-self-center text-accent-100"
         mode="range"
         min={minBookingLength + 1}
         max={maxBookingLength}
@@ -74,7 +75,7 @@ function DateSelector({settings, bookedDates, cabin}) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={() => resetRange()}

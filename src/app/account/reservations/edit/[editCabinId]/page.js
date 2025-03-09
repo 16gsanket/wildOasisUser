@@ -1,7 +1,25 @@
-export default function Page() {
+import { updateBooking } from "@/app/_lib/action";
+import { getBooking, getCabin } from "@/app/_lib/data-service";
+
+export async function generateMetadata({ params }) {
+  const paramGot = await params;
+
+  return{
+    title:`Cabin Edit ${paramGot.editCabinId}`
+  }
+}
+
+export default async function Page({params}) {
+
+  const paramGot =await params;
+
+  const {observations , cabinId ,numGuests} = await getBooking(paramGot.editCabinId);
+  const {maxCapacity } = await getCabin(cabinId);
+
+
   // CHANGE
-  const reservationId = 23;
-  const maxCapacity = 23;
+  const reservationId = paramGot.editCabinId;
+  // const maxCapacity = 23;
 
   return (
     <div>
@@ -9,7 +27,8 @@ export default function Page() {
         Edit Reservation #{reservationId}
       </h2>
 
-      <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+      <form action={updateBooking} className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+        <input hidden value={paramGot.editCabinId} name="bookingId" readOnly/>
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
           <select
@@ -17,6 +36,7 @@ export default function Page() {
             id="numGuests"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
             required
+            defaultValue={numGuests}
           >
             <option value="" key="">
               Select number of guests...
@@ -36,6 +56,7 @@ export default function Page() {
           <textarea
             name="observations"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+            defaultValue={observations}
           />
         </div>
 

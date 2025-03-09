@@ -37,16 +37,13 @@ export async function generateStaticParams() {
  * based on the cabinId provided in the params. It then displays the cabin's image, name,
  * description, maximum capacity, location, and privacy details. It also includes a
  * reservation section for booking the cabin.
- *
- * @param {Object} params - The parameters containing the cabinId.
- *
- * @returns {JSX.Element} - A JSX element representing the cabin details page.
  */
 
 export default async function Page({ params }) {
+  const paramGot = await params;
 
 
-  const cabin = await getCabin(params.cabinId);
+  const cabin = await getCabin(paramGot.cabinId);
   // const settings = await getSettings();
   // const bookedDates = await getBookedDatesByCabinId(params.cabinId);
 

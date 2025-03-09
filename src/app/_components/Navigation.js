@@ -2,7 +2,7 @@ import Link from "next/link";
 import { auth } from "../_lib/auth";
 export default async function Navigation() {
   const session = await auth()
-  console.log(session);
+  console.log('session from navbar' , session);
   
   return (
     <nav className="z-10 text-xl">
@@ -18,20 +18,20 @@ export default async function Navigation() {
           </Link>
         </li>
         <li>
-          {session?.user?.image?
-            <Link
+          {session?.user ?
+            (<Link
             href="/account"
             className="hover:text-accent-400 transition-colors flex gap-4 items-center"
           >
             <img src={session.user.image} className=" h-8 rounded-full"/>
             {session.user.name}
-          </Link>
-          : <Link
+          </Link>)
+          : (<Link
             href="/account"
             className="hover:text-accent-400 transition-colors"
           >
             Guest area
-          </Link>}
+          </Link>)}
         </li>
       </ul>
     </nav>

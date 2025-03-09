@@ -1,10 +1,18 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
+import { auth } from "@/app/_lib/auth";
+import { getGuest } from "@/app/_lib/data-service";
 
-export default function Page() {
-  // CHANGE
- 
-  const nationality = "portugal";
+
+export default async function Page() {
+  
+  
+  const session = await auth();
+  const guest = await getGuest(session?.user?.email);
+  
+  const nationality = guest.nationality;
+
+  
 
   return (
     <div>
@@ -17,7 +25,7 @@ export default function Page() {
         faster and smoother. See you soon!
       </p>
 
-      <UpdateProfileForm>
+      <UpdateProfileForm guest={guest}>
         <SelectCountry
           name="nationality"
           id="nationality"
