@@ -41,6 +41,35 @@ export async function updateGuest(formData){
 
 }  
 
+export async function createBooking(bookingData , formData){
+  const session = await auth();
+  const newBooking = {
+    ...bookingData , 
+    guestId : session.user.guestId,
+    numGuests : Number(formData.get('numGuests')),
+    observations : String(formData.get('observations').slice(0,1000)),
+    extraPrice : 0,
+    totalPrice : bookingData.cabinPrice,
+    isPaid : false,
+    hasBreakfast : false,
+    status : 'unconfirmed'
+  }
+
+  console.log(newBooking)
+
+  const { error } = await supabase
+    .from('bookings')
+    .insert([newBooking])
+    // So that the newly created object gets returned!
+    
+    if(error){
+      console.error(error);
+      throw new Error('Booking could not be created');
+    }
+
+    revalidatePath(`/cabins/${bookingData.cabinId}`)
+}
+
 export async function deleteReservation(bookingId){
 
   const session = await auth()
